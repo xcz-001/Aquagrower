@@ -7,11 +7,10 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/style.css" rel="stylesheet">
 </head>
-<body class="products">
+<body >
 
 <?php require 'nav.php'; ?>
-
-  <section class="p-5 ">
+  <section class="p-5 products">
     <h2 class="text-center mb-4">Our Products</h2>
 
        <!-- LEAFY GREENS -->
@@ -148,10 +147,7 @@
           </div>
         </div>
       </div>
-
-
   </section>
-  <script src="modals.php"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

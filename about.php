@@ -16,7 +16,6 @@
     <p class="text-center">Our story started with a mission to grow clean, fresh produce using hydroponics. We care for the environment and your health.</p>
     <p class="text-center">Our method uses water-efficient technology and zero pesticides to bring you the best.</p>
   </section>
-  <script src="modals.php"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,50 +1,25 @@
-<!-- Login Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1">
+<!-- Profile Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header text-white bg-success">
-        <h5 class="modal-title">Login</h5>
+      <div class="modal-header text-white  bg-green">
+        <h5 class="modal-title">Profile</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form>
-          <input type="text" class="form-control mb-3" placeholder="Username or Email">
-          <input type="password" class="form-control mb-3" placeholder="Password">
-          <button class="btn btn-success w-100">Login</button>
-        </form>
+        <p><strong>Name:</strong> John Doe</p>
+        <p><strong>Username:</strong> johndoe123</p>
+        <p><strong>Email:</strong> john@example.com</p>
+        <p><strong>Phone:</strong> 123-456-7890</p>
+        <p><strong>Address:</strong> 123 Greenhouse St, Eco City</p>
       </div>
       <div class="modal-footer">
-        <small>Don't have an account? <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal" data-bs-dismiss="modal">Sign up</a></small>
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editInfoModal">Edit Info</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Sign Up Modal -->
-<div class="modal fade" id="signupModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header text-white  bg-success">
-        <h5 class="modal-title">Sign Up</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <input type="text" class="form-control mb-2" placeholder="Full Name">
-          <input type="text" class="form-control mb-2" placeholder="Username">
-          <input type="email" class="form-control mb-2" placeholder="Email">
-          <input type="text" class="form-control mb-2" placeholder="Phone Number">
-          <input type="text" class="form-control mb-2" placeholder="Address">
-          <input type="password" class="form-control mb-3" placeholder="Password">
-          <button class="btn btn-success w-100">Sign Up</button>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <small>Already have an account? <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Login</a></small>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- Cart Modal -->
 <div class="modal fade" id="cartModal" tabindex="-1">
@@ -72,27 +47,6 @@
   </div>
 </div>
 
-<!-- Profile Modal -->
-<div class="modal fade" id="profileModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header text-white  bg-green">
-        <h5 class="modal-title">Profile</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <p><strong>Name:</strong> John Doe</p>
-        <p><strong>Username:</strong> johndoe123</p>
-        <p><strong>Email:</strong> john@example.com</p>
-        <p><strong>Phone:</strong> 123-456-7890</p>
-        <p><strong>Address:</strong> 123 Greenhouse St, Eco City</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editInfoModal">Edit Info</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- Edit Info Modal -->
 <div class="modal fade" id="editInfoModal" tabindex="-1" aria-labelledby="editInfoModalLabel" aria-hidden="true">
@@ -103,11 +57,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <input type="text" class="form-control mb-2" name="name" placeholder="Name" value="John Doe" required>
         <input type="text" class="form-control mb-2" name="username" placeholder="Username" value="johndoe123" required>
-        <input type="email" class="form-control mb-2" name="email" placeholder="Email" value="john@example.com" required>
-        <input type="text" class="form-control mb-2" name="phone" placeholder="Phone" value="123-456-7890">
-        <input type="text" class="form-control mb-2" name="address" placeholder="Address" value="123 Greenhouse St, Eco City">
         <input type="password" class="form-control mb-2" name="password" placeholder="New Password (leave blank to keep current)">
       </div>
       <div class="modal-footer">

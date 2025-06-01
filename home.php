@@ -10,7 +10,6 @@
 <body>
 
 <?php require 'nav.php'; ?>
-<?php require 'modals.php'; ?>
 
   <!-- Hero Section -->
   <section class="text-center p-5 bg-light hero">
@@ -22,7 +21,6 @@
   </section>
 
   <!-- Modals -->
-  <script src="modals.php"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
