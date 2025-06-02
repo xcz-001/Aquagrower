@@ -1,0 +1,25 @@
+Array
+(
+    [_POST] => Array
+        (
+            [name] => Mango
+            [description] => Sweet near ripe.
+            [qty] => 19
+            [price] => 33.1
+        )
+
+    [_FILES] => Array
+        (
+            [image] => Array
+                (
+                    [name] => mango.jpg
+                    [full_path] => mango.jpg
+                    [type] => image/jpeg
+                    [tmp_name] => C:\xampp\tmp\php71E2.tmp
+                    [error] => 0
+                    [size] => 54193
+                )
+
+        )
+
+)

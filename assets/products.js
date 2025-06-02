@@ -1,0 +1,119 @@
+async function loadProducts() {
+      const res = await fetch("api/products/index.php");
+      const products = await res.json();
+      const container = document.getElementById("products");
+
+      container.innerHTML = products.map(p => `
+        <div class="card">
+          <img src="${p.filepath}" class="card-img-top" alt="${p.name}">
+          <div class="card-body">
+            <span class="card-headko">
+              <h5 class="card-title">${p.name}</h5>
+              <span class="card-price">₱${p.price}</span>
+            </span>
+            <p class="card-text">${p.description}</p>
+            <button class="btn btn-success">Add to Cart</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+const CART_KEY = "cartItems";
+
+  // Load cart from localStorage
+  function getCart() {
+    return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+  }
+
+  function saveCart(cart) {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  }
+
+  function addToCart(product) {
+    const cart = getCart();
+    const existing = cart.find(item => item.id === product.id);
+    if (existing) {
+      existing.qty++;
+    } else {
+      cart.push({ ...product, qty: 1 });
+    }
+    saveCart(cart);
+    renderCart();
+    showToast();
+  }
+
+  function renderCart() {
+    const cart = getCart();
+    const body = document.querySelector("#cartModal .modal-body");
+    body.innerHTML = "";
+
+    if (cart.length === 0) {
+      body.innerHTML = "<p class='text-center'>Cart is empty</p>";
+      return;
+    }
+
+    cart.forEach((item, index) => {
+      const row = document.createElement("div");
+      row.className = "d-flex justify-content-between align-items-center mb-2";
+      row.innerHTML = `
+        <span>${item.name}</span>
+        <div>
+          <button class="btn btn-sm btn-outline-success" onclick="updateQty(${item.id}, -1)">-</button>
+          <span class="mx-2">${item.qty}</span>
+          <button class="btn btn-sm btn-outline-success" onclick="updateQty(${item.id}, 1)">+</button>
+          <button class="btn btn-sm btn-danger" onclick="removeFromCart(${item.id})">Remove</button>
+        </div>
+      `;
+      body.appendChild(row);
+    });
+  }
+
+  function updateQty(id, delta) {
+    const cart = getCart();
+    const item = cart.find(i => i.id === id);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) {
+      removeFromCart(id);
+    } else {
+      saveCart(cart);
+      renderCart();
+    }
+  }
+
+  function removeFromCart(id) {
+    let cart = getCart().filter(item => item.id !== id);
+    saveCart(cart);
+    renderCart();
+  }
+
+  // Attach handlers to dynamically rendered buttons
+  document.addEventListener("click", e => {
+    if (e.target.classList.contains("btn-success") && e.target.textContent === "Add to Cart") {
+      const card = e.target.closest(".card");
+      const product = {
+        id: card.dataset.id,
+        name: card.querySelector(".card-title").textContent.trim(),
+        price: parseFloat(card.querySelector(".card-price").textContent.replace(/[^\d.]/g, "")),
+      };
+      addToCart(product);
+    }
+  });
+
+function showToast() {
+  const toast = new bootstrap.Toast(document.getElementById('cartToast'));
+  toast.show();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const toastEl = document.getElementById('cartToast');
+  if (toastEl) {
+    toastEl.addEventListener('shown.bs.toast', () => {
+      setTimeout(() => bootstrap.Toast.getInstance(toastEl).hide(), 1500);
+    });
+  }
+});
+
+  // Initial render
+renderCart();
+loadProducts();

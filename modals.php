@@ -31,13 +31,13 @@
       </div>
       <div class="modal-body">
         <div class="d-flex justify-content-between align-items-center">
-          <span>Lettuce</span>
+          <!-- <span>Lettuce</span>
           <div>
             <button class="btn btn-sm btn-outline-success">-</button>
             <span>1</span>
             <button class="btn btn-sm btn-outline-success">+</button>
             <button class="btn btn-sm btn-danger">Remove</button>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="modal-footer">

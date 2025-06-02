@@ -12,7 +12,7 @@ if (!isset($data['username'], $data['password'], $data['role'])) {
 
 $username = $data['username'];
 
-// ✅ Check if username already exists
+// Check if username already exists
 $stmt = $pdo->prepare("SELECT id FROM users WHERE username = ?");
 $stmt->execute([$username]);
 if ($stmt->fetch()) {

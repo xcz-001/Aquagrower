@@ -29,7 +29,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
   <h4>Add Product</h4>
   <form id="addProductForm" enctype="multipart/form-data">
     <div class="row g-2 mb-2">
-      <div class="col"><input type="text" name="barcode" class="form-control" placeholder="Barcode" required></div>
+      <div class="col"><input type="text" name="barcode" class="form-control" placeholder="Barcode" disabled></div>
       <div class="col"><input type="text" name="name" class="form-control" placeholder="Name" required></div>
       <div class="col"><input type="text" name="description" class="form-control" placeholder="Description" required></div>
     </div>
@@ -63,7 +63,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
         </select>
       </div>
     </div>
-    <button class="btn btn-primary mb-3">Add User</button>
+    <button type="submit" class="btn btn-primary mb-3">Add User</button>
   </form>
 
   <h5>All Users</h5>
