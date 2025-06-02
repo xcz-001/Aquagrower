@@ -99,16 +99,17 @@ async function deleteUser(id) {
   async function loadSales() {
     const res = await fetch("api/sales/index.php");
     const data = await res.json();
+    console.log(data);
     const tbody = document.querySelector("#salesTable tbody");
     tbody.innerHTML = "";
     data.forEach(s => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${s.id}</td>
-        <td>${s.product_name}</td>
+        <td>${s.product}</td>
         <td>${s.qty}</td>
         <td>${s.total}</td>
-        <td>${s.created_at}</td>
+        <td>${s.date}</td>
       `;
       tbody.appendChild(tr);
     });

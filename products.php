@@ -10,6 +10,7 @@
 <body >
 
 <?php require 'nav.php'; ?>
+
 <!-- cart toast -->
   <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
   <div id="cartToast" class="toast align-items-center text-bg-success border-0" role="alert">

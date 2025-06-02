@@ -2,22 +2,22 @@ Array
 (
     [_POST] => Array
         (
-            [name] => Mango
-            [description] => Sweet near ripe.
-            [qty] => 19
-            [price] => 33.1
+            [name] => iya
+            [description] => masarap
+            [qty] => 1
+            [price] => 999
         )
 
     [_FILES] => Array
         (
             [image] => Array
                 (
-                    [name] => mango.jpg
-                    [full_path] => mango.jpg
+                    [name] => 1743867435537-2.jpg
+                    [full_path] => 1743867435537-2.jpg
                     [type] => image/jpeg
-                    [tmp_name] => C:\xampp\tmp\php71E2.tmp
+                    [tmp_name] => C:\xampp\tmp\php3CE4.tmp
                     [error] => 0
-                    [size] => 54193
+                    [size] => 966267
                 )
 
         )

@@ -1,22 +1,44 @@
 async function loadProducts() {
-      const res = await fetch("api/products/index.php");
-      const products = await res.json();
-      const container = document.getElementById("products");
+  const res = await fetch("api/products/index.php");
+  const products = await res.json();
+  const container = document.getElementById("products");
 
-      container.innerHTML = products.map(p => `
-        <div class="card">
-          <img src="${p.filepath}" class="card-img-top" alt="${p.name}">
-          <div class="card-body">
-            <span class="card-headko">
-              <h5 class="card-title">${p.name}</h5>
-              <span class="card-price">₱${p.price}</span>
-            </span>
-            <p class="card-text">${p.description}</p>
-            <button class="btn btn-success">Add to Cart</button>
-          </div>
-        </div>
-      `).join("");
-    }
+  container.innerHTML = "";
+
+  products.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.dataset.id = p.id; // Store product ID for later use
+    card.innerHTML = `
+      <img src="${p.filepath}" class="card-img-top" alt="${p.name}">
+      <div class="card-body">
+        <span class="card-headko d-flex justify-content-between align-items-center">
+          <h5 class="card-title mb-0">${p.name}</h5>
+          <span class="card-price">₱${p.price}</span>
+        </span>
+        <p class="card-text">${p.description}</p>
+      </div>
+    `;
+
+    const btn = document.createElement("button");
+    btn.className = "btn btn-success mt-2";
+    btn.textContent = "Add to Cart";
+
+    // btn.addEventListener("click", () => {
+    //   const item = {
+    //     id: p.id,
+    //     name: p.name,
+    //     price: parseFloat(p.price),
+    //     image: p.filepath,
+    //     qty: 1
+    //   };
+    //   addToCart(item);
+    // });
+
+    card.querySelector(".card-body").appendChild(btn);
+    container.appendChild(card);
+  });
+}
 
 const CART_KEY = "cartItems";
 
@@ -31,6 +53,7 @@ const CART_KEY = "cartItems";
 
   function addToCart(product) {
     const cart = getCart();
+    console.log("Adding to cart:", product);
     const existing = cart.find(item => item.id === product.id);
     if (existing) {
       existing.qty++;
@@ -58,10 +81,10 @@ const CART_KEY = "cartItems";
       row.innerHTML = `
         <span>${item.name}</span>
         <div>
-          <button class="btn btn-sm btn-outline-success" onclick="updateQty(${item.id}, -1)">-</button>
+          <button class="btn btn-sm btn-outline-success" onclick="updateQty('${item.id}', -1)">-</button>
           <span class="mx-2">${item.qty}</span>
-          <button class="btn btn-sm btn-outline-success" onclick="updateQty(${item.id}, 1)">+</button>
-          <button class="btn btn-sm btn-danger" onclick="removeFromCart(${item.id})">Remove</button>
+          <button class="btn btn-sm btn-outline-success" onclick="updateQty('${item.id}', 1)">+</button>
+          <button class="btn btn-sm btn-danger" onclick="removeFromCart('${item.id}')">Remove</button>
         </div>
       `;
       body.appendChild(row);
@@ -114,6 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-  // Initial render
+// Initial render
 renderCart();
 loadProducts();
