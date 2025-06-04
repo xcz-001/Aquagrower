@@ -115,7 +115,7 @@ async function deleteUser(id) {
     });
   }
 
-  // INIT
+  // INITx
   loadProducts();
   loadUsers();
   loadSales();

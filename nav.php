@@ -12,5 +12,7 @@
         <li class="nav-item"><a class="nav-link text-white" href="contact.php">Contact Us</a></li>
       </ul>
       <button class="btn btn-light me-2" data-bs-toggle="modal" data-bs-target="#cartModal">🛒</button>
+      <button class="btn btn-danger" onclick="logout()">Logout</button>
     </div>
   </nav>
+  <script src="assets/script.js"></script>

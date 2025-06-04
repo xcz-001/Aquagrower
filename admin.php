@@ -34,7 +34,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
       <div class="col"><input type="text" name="description" class="form-control" placeholder="Description" required></div>
     </div>
     <div class="row g-2 mb-2">
-      <div class="col"><input type="number" name="qty" class="form-control" placeholder="Qty" required></div>
+      <div class="col"><input type="number" min="0" name="qty" class="form-control" placeholder="Qty" required></div>
       <div class="col"><input type="number" step="0.01" name="price" class="form-control" placeholder="Price" required></div>
       <div class="col"><input type="file" name="image" class="form-control" accept="image/*" required></div>
     </div>

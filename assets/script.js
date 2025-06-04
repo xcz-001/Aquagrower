@@ -77,3 +77,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+async function logout() {
+  const res = await fetch("api/logout.php", {
+    method: "POST",
+    credentials: "include"
+  });
+
+  if (res.ok) {
+    localStorage.removeItem("cartItems");// Clear cart on logout
+    alert("You have been logged out successfully.");
+    window.location.href = "index.html"; // Redirect after logout
+  } else {
+    alert("Logout failed");
+  }
+}
