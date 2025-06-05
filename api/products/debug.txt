@@ -2,22 +2,22 @@ Array
 (
     [_POST] => Array
         (
-            [name] => iya
-            [description] => masarap
-            [qty] => 1
-            [price] => 999
+            [name] => carrot2
+            [description] => more carrots
+            [qty] => 11
+            [price] => 46.1
         )
 
     [_FILES] => Array
         (
             [image] => Array
                 (
-                    [name] => 1743867435537-2.jpg
-                    [full_path] => 1743867435537-2.jpg
+                    [name] => carrots2.jpg
+                    [full_path] => carrots2.jpg
                     [type] => image/jpeg
-                    [tmp_name] => C:\xampp\tmp\php3CE4.tmp
+                    [tmp_name] => C:\xampp\tmp\phpC616.tmp
                     [error] => 0
-                    [size] => 966267
+                    [size] => 9363
                 )
 
         )

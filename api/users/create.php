@@ -26,7 +26,7 @@ $hash = password_hash($data['password'], PASSWORD_BCRYPT);
 try {
     $stmt = $pdo->prepare("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
     $stmt->execute([$data['username'], $hash, $data['role']]);
-    http_response_code(201);
+    http_response_code(200);
     echo json_encode(["success" => true]);
 } catch (PDOException $e) {
     http_response_code(500);

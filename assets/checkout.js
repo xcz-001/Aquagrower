@@ -23,6 +23,7 @@ function placeOrder() {
 
 function updateCheckoutTotal() {
   const cart = getCart();
+  printReceipt();
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
   document.getElementById("checkoutTotal").textContent = total.toFixed(2);
 }
@@ -34,6 +35,48 @@ const CART_KEY = "cartItems";
   }
 
 updateCheckoutTotal();
+
+
+function printReceipt() {
+
+  const cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+  const container = document.getElementById("receiptContainer");
+  container.innerHTML = "";
+
+  if (cart.length === 0) {
+    container.innerHTML = "<p class='text-center'>Cart is empty</p>";
+    return;
+  }
+
+  const grid = document.createElement("div");
+  grid.style.display = "grid";
+  grid.style.gridTemplateColumns = "1fr 100px 80px 100px";
+  grid.style.gap = "10px";
+  grid.classList.add("mb-3");
+
+  // Header row
+  ["Product", "Price", "Qty", "Subtotal"].forEach(text => {
+    const cell = document.createElement("div");
+    cell.innerHTML = `<strong>${text}</strong>`;
+    grid.appendChild(cell);
+  });
+
+  let total = 0;
+  cart.forEach(item => {
+    const subtotal = item.price * item.qty;
+    total += subtotal;
+
+    grid.innerHTML += `
+      <div>${item.name}</div>
+      <div>₱${item.price.toFixed(2)}</div>
+      <div>${item.qty}</div>
+      <div>₱${subtotal.toFixed(2)}</div>
+    `;
+  });
+
+  container.appendChild(grid);
+  document.getElementById("checkoutTotal").textContent = total.toFixed(2);
+}
 
 
         // const checkoutModalEl = document.getElementById('checkoutModal');

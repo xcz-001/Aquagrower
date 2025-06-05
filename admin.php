@@ -22,7 +22,10 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 </head>
 <body class="p-4">
 <div class="container">
-  <h2 class="mb-4">Admin Dashboard</h2>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0">Admin Dashboard</h2>
+  <button class="btn btn-danger" onclick="logout()">Logout</button>
+</div>
 
   <!-- PRODUCTS -->
   <hr>
@@ -77,6 +80,11 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
   <!-- SALES REPORT -->
   <hr>
   <h4>Sales Report</h4>
+    <select id="view">
+      <option value="today">Today</option>
+      <option value="all">All</option>
+    </select>
+
   <table class="table table-bordered" id="salesTable">
     <thead><tr>
       <th>ID</th><th>Product</th><th>Qty</th><th>Total</th><th>Date</th>

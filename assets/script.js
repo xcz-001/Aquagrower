@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert(result.error || 'Missing required fields');
       } else {
         alert(result.error || 'An error occurred');
+        // console.error('Error:', err);
       }
       } catch (err) {
         alert('Something went wrong. Please try again later.');

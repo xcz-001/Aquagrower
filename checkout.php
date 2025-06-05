@@ -16,7 +16,11 @@
         <h5 class="mb-0">Checkout</h5>
       </div>
       <div class="card-body">
-        <div class="mb-3">
+        <div id="receiptContainer" class="mb-3">
+          </div>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-end pe-3 mb-3">
           <strong>Total:</strong> ₱<span id="checkoutTotal">0.00</span>
         </div>
         <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#successModal" onclick="placeOrder()">Place Order</button>

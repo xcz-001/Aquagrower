@@ -22,6 +22,7 @@
     document.querySelector("#addProductForm").onsubmit = async (e) => {
       e.preventDefault();
       const formData = new FormData(e.target);
+      console.log("Form data:", formData);
       // alert(formData)
       const res = await fetch("api/products/create.php", {
         method: "POST",
@@ -44,6 +45,7 @@
       body: JSON.stringify({ id })
     });
     const result = await res.json();
+    console.log(result); // to catch any error message
     if (result.success) loadProducts();
     else alert("Delete failed");
   }
@@ -91,6 +93,7 @@ async function deleteUser(id) {
     body: JSON.stringify({ id })
   });
   const result = await res.json();
+  console.log(result); // to catch any error message
   if (result.success) loadUsers();
   else alert("Delete failed");
 }
@@ -115,7 +118,23 @@ async function deleteUser(id) {
     });
   }
 
-  // INITx
+
+async function logout() {
+  const res = await fetch("api/logout.php", {
+    method: "POST",
+    credentials: "include"
+  });
+
+  if (res.ok) {
+    localStorage.removeItem("cartItems");// Clear cart on logout
+    alert("You have been logged out successfully.");
+    window.location.href = "index.html"; // Redirect after logout
+  } else {
+    alert("Logout failed");
+  }
+}
+
+  // INIT
   loadProducts();
   loadUsers();
   loadSales();

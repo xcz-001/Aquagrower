@@ -15,26 +15,15 @@ async function loadProducts() {
         <span class="card-headko d-flex justify-content-between align-items-center">
           <h5 class="card-title mb-0">${p.name}</h5>
           <span class="card-price">₱${p.price}</span>
-        </span>
-        <p class="card-text">${p.description}</p>
+          </span>
+          <p class="card-text">${p.description}</p>
+          <p class="card-qty">Stock: ${p.quantity}</p>
       </div>
     `;
 
     const btn = document.createElement("button");
     btn.className = "btn btn-success mt-2";
     btn.textContent = "Add to Cart";
-
-    // btn.addEventListener("click", () => {
-    //   const item = {
-    //     id: p.id,
-    //     name: p.name,
-    //     price: parseFloat(p.price),
-    //     image: p.filepath,
-    //     qty: 1
-    //   };
-    //   addToCart(item);
-    // });
-
     card.querySelector(".card-body").appendChild(btn);
     container.appendChild(card);
   });
@@ -52,18 +41,28 @@ const CART_KEY = "cartItems";
   }
 
   function addToCart(product) {
-    const cart = getCart();
-    console.log("Adding to cart:", product);
-    const existing = cart.find(item => item.id === product.id);
-    if (existing) {
-      existing.qty++;
-    } else {
-      cart.push({ ...product, qty: 1 });
+  const cart = getCart();
+  const existing = cart.find(item => item.id === product.id);
+
+  if (existing) {
+    if (existing.qty + 1 > existing.stock_qty) {
+      alert("Not enough stock.");
+      return;
     }
-    saveCart(cart);
-    renderCart();
-    showToast();
+    existing.qty++;
+  } else {
+    if (product.stock_qty <= 0) {
+      alert("Product is out of stock");
+      return;
+    }
+    cart.push({ ...product, qty: 1 });
   }
+
+  saveCart(cart);
+  renderCart();
+  showToast();
+}
+
 
   function renderCart() {
     const cart = getCart();
@@ -91,18 +90,36 @@ const CART_KEY = "cartItems";
     });
   }
 
+  // function updateQty(id, delta) {
+  //   const cart = getCart();
+  //   const item = cart.find(i => i.id === id);
+  //   if (!item) return;
+  //   item.qty += delta;
+  //   if (item.qty <= 0) {
+  //     removeFromCart(id);
+  //   } else {
+  //     saveCart(cart);
+  //     renderCart();
+  //   }
+  // }
+
   function updateQty(id, delta) {
-    const cart = getCart();
-    const item = cart.find(i => i.id === id);
-    if (!item) return;
-    item.qty += delta;
-    if (item.qty <= 0) {
-      removeFromCart(id);
-    } else {
-      saveCart(cart);
-      renderCart();
-    }
+  const cart = getCart();
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+
+  const newQty = item.qty + delta;
+
+  if (newQty <= 0) {
+    removeFromCart(id);
+  } else if (newQty > item.stock_qty) {
+    alert("Not enough stock.");
+  } else {
+    item.qty = newQty;
+    saveCart(cart);
+    renderCart();
   }
+}
 
   function removeFromCart(id) {
     let cart = getCart().filter(item => item.id !== id);
@@ -118,6 +135,7 @@ const CART_KEY = "cartItems";
         id: card.dataset.id,
         name: card.querySelector(".card-title").textContent.trim(),
         price: parseFloat(card.querySelector(".card-price").textContent.replace(/[^\d.]/g, "")),
+        stock_qty: parseInt(card.querySelector(".card-qty").textContent.replace(/[^\d]/g, "")), //step 2: Add quantity to product object
       };
       addToCart(product);
     }
