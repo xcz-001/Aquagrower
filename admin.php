@@ -12,6 +12,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
   <meta charset="UTF-8">
   <title>Admin Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <style>
     img.thumb {
       width: 60px;
@@ -51,6 +52,41 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     </tr></thead>
     <tbody></tbody>
   </table>
+
+  <!-- UPDATE PRODUCT modal-->
+<div class="modal fade" id="editProductModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Edit Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editProductForm">
+          <div class="row g-3">
+            <!-- Column 1: Existing values -->
+            <div class="col-md-6" id="existingValues"></div>
+
+            <!-- Column 2: Input fields -->
+            <div class="col-md-6">
+              <input type="hidden" name="id" id="edit-id">
+              <div><label>Barcode</label><input type="text" class="form-control" name="barcode" id="edit-barcode"></div>
+              <div><label>Name</label><input type="text" class="form-control" name="name" id="edit-name"></div>
+              <div><label>Description</label><input type="text" class="form-control" name="description" id="edit-description"></div>
+              <div><label>Qty</label><input type="number" class="form-control" name="qty" id="edit-qty"></div>
+              <div><label>Price</label><input type="number" step="0.01" class="form-control" name="price" id="edit-price"></div>
+              <div><label>Image (optional)</label><input type="file" class="form-control" name="image" id="edit-image"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" onclick="saveProduct()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
   <!-- USERS -->
   <hr>

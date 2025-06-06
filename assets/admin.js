@@ -13,7 +13,10 @@
         <td>${p.description}</td>
         <td>${p.quantity}</td>
         <td>${p.price}</td>
-        <td><button class="btn btn-danger btn-sm" onclick="deleteProduct(${p.id})">Delete</button></td>
+        <td>
+        <button class="btn btn-danger btn-sm" onclick="deleteProduct(${p.id})">Delete</button>
+        <button class="btn btn-primary btn-sm" id="editProductBtn-${p.id}" onclick="editProduct(${p.id})">Edit</button>
+        </td>
       `;
       tbody.appendChild(tr);
     });
@@ -102,7 +105,7 @@ async function deleteUser(id) {
   async function loadSales() {
     const res = await fetch("api/sales/index.php");
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
     const tbody = document.querySelector("#salesTable tbody");
     tbody.innerHTML = "";
     data.forEach(s => {
@@ -132,6 +135,54 @@ async function logout() {
   } else {
     alert("Logout failed");
   }
+}
+
+function editProduct(id) {
+  const row = document.querySelector(`#editProductBtn-${id}`).closest("tr");
+  const tds = row.querySelectorAll("td");
+
+  const existing = `
+    <div><strong>Barcode:</strong> ${tds[1].textContent}</div>
+    <div><strong>Name:</strong> ${tds[2].textContent}</div>
+    <div><strong>Description:</strong> ${tds[3].textContent}</div>
+    <div><strong>Qty:</strong> ${tds[4].textContent}</div>
+    <div><strong>Price:</strong> ${tds[5].textContent}</div>
+    `;
+
+    new bootstrap.Modal(document.getElementById("editProductModal")).show();
+  document.getElementById("existingValues").innerHTML = existing;
+  document.getElementById("edit-id").value = id;
+  document.getElementById("edit-barcode").value = tds[1].textContent;
+  document.getElementById("edit-name").value = tds[2].textContent;
+  document.getElementById("edit-description").value = tds[3].textContent;
+  document.getElementById("edit-qty").value = tds[4].textContent;
+  document.getElementById("edit-price").value = tds[5].textContent;
+
+}
+
+function saveProduct() {
+  const form = document.getElementById("editProductForm");
+  const formData = new FormData(form);
+  // console.log("Form sent to API:", formData);
+  fetch("api/products/update.php", {
+    method: "POST",
+    body: formData,
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log("API response:",data);
+    if (data.success) {
+      alert("Product updated!");
+      bootstrap.Modal.getInstance(document.getElementById("editProductModal")).hide();
+      loadProducts();
+    } else {
+      alert("Failed to update product.");
+    }
+  })
+  .catch(err => {
+    console.log(err);
+    alert("Error updating product.");
+  });
 }
 
   // INIT
