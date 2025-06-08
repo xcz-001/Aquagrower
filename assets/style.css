@@ -77,7 +77,7 @@ input.form-control:focus, textarea.form-control:focus {
 
 @font-face {
   font-family: 'MyFont';
-  src: url('Plaguard-ZVnjx.otf') format('opentype');
+  src: url('font/Plaguard-ZVnjx.otf') format('opentype');
 }
 
 .myFont{

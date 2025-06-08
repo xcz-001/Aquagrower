@@ -1,5 +1,5 @@
 async function loadProducts() {
-  const res = await fetch("api/products/index.php");
+  const res = await fetch("http://localhost/AquaGrower/api/products/index.php");
   const products = await res.json();
   const container = document.getElementById("products");
 
@@ -10,7 +10,7 @@ async function loadProducts() {
     card.className = "card";
     card.dataset.id = p.id; // Store product ID for later use
     card.innerHTML = `
-      <img src="${p.filepath}" class="card-img-top" alt="${p.name}">
+      <img src="../${p.filepath}" class="card-img-top" alt="${p.name}">
       <div class="card-body">
         <span class="card-headko d-flex justify-content-between align-items-center">
           <h5 class="card-title mb-0">${p.name}</h5>

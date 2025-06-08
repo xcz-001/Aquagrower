@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    header("Location: index.html");
+    header("Location: ../index.html");
     exit;
 }
 ?>
@@ -12,7 +12,9 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
   <meta charset="UTF-8">
   <title>Admin Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/style.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
   <style>
     img.thumb {
       width: 60px;
@@ -115,7 +117,10 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 
   <!-- SALES REPORT -->
   <hr>
-  <h4>Sales Report</h4>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4>Sales Report</h4>
+    <button class="btn btn-success" onclick="downloadPDF()">Download PDF</button>
+  </div>
     <select id="view">
       <option value="today">Today</option>
       <option value="all">All</option>
@@ -129,6 +134,8 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
   </table>
 </div>
 
-<script src="assets/admin.js"></script>
+<script src="../assets/js/admin.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </body>
 </html>

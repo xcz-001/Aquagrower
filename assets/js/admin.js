@@ -1,13 +1,13 @@
  // PRODUCTS
   async function loadProducts() {
-    const res = await fetch("api/products/index.php");
+    const res = await fetch("http://localhost/AquaGrower/api/products/index.php");
     const data = await res.json();
     const tbody = document.querySelector("#productsTable tbody");
     tbody.innerHTML = "";
     data.forEach(p => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td><img src="${p.filepath}" class="thumb" /></td>
+        <td><img src="../${p.filepath}" class="thumb" /></td>
         <td>${p.barcode}</td>
         <td>${p.name}</td>
         <td>${p.description}</td>
@@ -27,7 +27,7 @@
       const formData = new FormData(e.target);
       console.log("Form data:", formData);
       // alert(formData)
-      const res = await fetch("api/products/create.php", {
+      const res = await fetch("http://localhost/AquaGrower/api/products/create.php", {
         method: "POST",
         body: formData
       });
@@ -42,7 +42,7 @@
 
   async function deleteProduct(id) {
     if (!confirm("Delete product?")) return;
-    const res = await fetch("api/products/delete.php", {
+    const res = await fetch("http://localhost/AquaGrower/api/products/delete.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id })
@@ -55,7 +55,7 @@
 
   // USERS
   async function loadUsers() {
-    const res = await fetch("api/users/index.php");
+    const res = await fetch("http://localhost/AquaGrower/api/users/index.php");
     const data = await res.json();
     const tbody = document.querySelector("#usersTable tbody");
     tbody.innerHTML = "";
@@ -75,7 +75,7 @@
     e.preventDefault();
     const form = e.target;
     const data = new URLSearchParams(new FormData(form));
-    const res = await fetch("api/users/create.php", {
+    const res = await fetch("http://localhost/AquaGrower/api/users/create.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(Object.fromEntries(data.entries()))
@@ -90,7 +90,7 @@
 
 async function deleteUser(id) {
   if (!confirm("Delete user?")) return;
-  const res = await fetch("api/users/delete.php", {
+  const res = await fetch("http://localhost/AquaGrower/api/users/delete.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ id })
@@ -102,28 +102,44 @@ async function deleteUser(id) {
 }
 
   // SALES
-  async function loadSales() {
-    const res = await fetch("api/sales/index.php");
-    const data = await res.json();
-    // console.log(data);
-    const tbody = document.querySelector("#salesTable tbody");
-    tbody.innerHTML = "";
-    data.forEach(s => {
+//New sales loader function
+async function loadSales() {
+  const view = document.getElementById("view").value;
+  const res = await fetch(`http://localhost/AquaGrower/api/sales/index.php?view=${view}`);
+  const data = await res.json();
+  console.log(res.status);
+  console.log("fetched data:", data);
+  const tbody = document.querySelector("#salesTable tbody");
+  tbody.innerHTML = "";
+
+  data.forEach((sale, index) => {
+    sale.items.forEach((item, i) => {
       const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${s.id}</td>
-        <td>${s.product}</td>
-        <td>${s.qty}</td>
-        <td>${s.total}</td>
-        <td>${s.date}</td>
-      `;
+
+      if (i === 0) {
+        tr.innerHTML = `
+          <td rowspan="${sale.items.length}">${sale.user_id}</td>
+          <td>${item.product}</td>
+          <td>${item.qty}</td>
+          <td rowspan="${sale.items.length}">₱${sale.total.toFixed(2)}</td>
+          <td rowspan="${sale.items.length}">${sale.created_at}</td>
+        `;
+      } else {
+        tr.innerHTML = `
+          <td>${item.product}</td>
+          <td>${item.qty}</td>
+        `;
+      }
+
       tbody.appendChild(tr);
     });
-  }
+  });
+}
+
 
 
 async function logout() {
-  const res = await fetch("api/logout.php", {
+  const res = await fetch("http://localhost/AquaGrower/api/logout.php", {
     method: "POST",
     credentials: "include"
   });
@@ -131,7 +147,7 @@ async function logout() {
   if (res.ok) {
     localStorage.removeItem("cartItems");// Clear cart on logout
     alert("You have been logged out successfully.");
-    window.location.href = "index.html"; // Redirect after logout
+    window.location.href = "../index.html"; // Redirect after logout
   } else {
     alert("Logout failed");
   }
@@ -164,13 +180,13 @@ function saveProduct() {
   const form = document.getElementById("editProductForm");
   const formData = new FormData(form);
   // console.log("Form sent to API:", formData);
-  fetch("api/products/update.php", {
+  fetch("http://localhost/AquaGrower/api/products/update.php", {
     method: "POST",
     body: formData,
   })
   .then(res => res.json())
   .then(data => {
-    console.log("API response:",data);
+    // console.log("API response:",data);
     if (data.success) {
       alert("Product updated!");
       bootstrap.Modal.getInstance(document.getElementById("editProductModal")).hide();
@@ -184,8 +200,28 @@ function saveProduct() {
     alert("Error updating product.");
   });
 }
+async function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const table = document.getElementById("salesTable");
+
+  // Optional: Adjust scale for better quality
+  const canvas = await html2canvas(table, { scale: 2 });
+  const imgData = canvas.toDataURL("image/png");
+
+  const pdf = new jsPDF("p", "mm", "a4");
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+  const imgProps = pdf.getImageProperties(imgData);
+  const pdfWidth = pageWidth;
+  const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+  pdf.addImage(imgData, "PNG", 0, 10, pdfWidth, pdfHeight);
+  pdf.save("sales_report.pdf");
+}
+
 
   // INIT
   loadProducts();
   loadUsers();
-  loadSales();
+  document.getElementById("view").addEventListener("change", loadSales);
+  window.addEventListener("DOMContentLoaded", loadSales);

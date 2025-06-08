@@ -3,7 +3,7 @@ function placeOrder() {
   const cart = getCart();
 
   console.log("Placing order with cart:", cart);
-  fetch("api/checkout.php", {
+  fetch("http://localhost/AquaGrower/api/checkout.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ cart: getCart() }),
@@ -11,6 +11,7 @@ function placeOrder() {
   })
   .then(res => res.json())
   .then(data => {
+    console.log("status:", data.status);
     if (data.success) {
       localStorage.removeItem("cartItems");
 

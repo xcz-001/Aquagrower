@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Checkout</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/style.css" rel="stylesheet">
+  <link href="../assets/style.css" rel="stylesheet">
 </head>
 <?php include 'nav.php'; ?>
 <body class="bg-light">
@@ -31,6 +31,6 @@
   <button class="btn btn-success w-100" onclick="location.href='products.php'">Back to Products</button>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/checkout.js"></script>
+  <script src="../assets/js/checkout.js"></script>
 </body>
 </html>

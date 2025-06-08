@@ -2,22 +2,22 @@ Array
 (
     [_POST] => Array
         (
-            [name] => carrot2
-            [description] => more carrots
-            [qty] => 11
-            [price] => 46.1
+            [name] => alkfhcjsd 
+            [description] => jsdjscjksac
+            [qty] => 7845
+            [price] => 785.3
         )
 
     [_FILES] => Array
         (
             [image] => Array
                 (
-                    [name] => carrots2.jpg
-                    [full_path] => carrots2.jpg
+                    [name] => f5ad4341-5a50-4a91-8719-e0ca4333413d.jpg
+                    [full_path] => f5ad4341-5a50-4a91-8719-e0ca4333413d.jpg
                     [type] => image/jpeg
-                    [tmp_name] => C:\xampp\tmp\phpC616.tmp
+                    [tmp_name] => C:\xampp\tmp\php31F5.tmp
                     [error] => 0
-                    [size] => 9363
+                    [size] => 34882
                 )
 
         )

@@ -19,9 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(res.status);
         if (res.ok) {
           if (result.user.role === 'admin') {
-            window.location.href = 'admin.php';
+            window.location.href = 'homepage/admin.php';
           } else if (result.user.role === 'cashier') {
-            window.location.href = 'home.php';
+            window.location.href = 'homepage/home.php';
           }
         } else {
           alert(result.error || 'Login failed');
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function logout() {
-  const res = await fetch("api/logout.php", {
+  const res = await fetch("http://localhost/AquaGrower/api/logout.php", {
     method: "POST",
     credentials: "include"
   });
@@ -88,7 +88,7 @@ async function logout() {
   if (res.ok) {
     localStorage.removeItem("cartItems");// Clear cart on logout
     alert("You have been logged out successfully.");
-    window.location.href = "index.html"; // Redirect after logout
+    window.location.href = "../index.html"; // Redirect after logout
   } else {
     alert("Logout failed");
   }

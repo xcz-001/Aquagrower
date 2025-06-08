@@ -1,24 +1,51 @@
 <?php
-header("Content-Type: application/json");
 require '../db.php';
+header("Content-Type: application/json");
 
-try {
-    $stmt = $pdo->query("
-        SELECT
-            s.user_id AS id,                      -- Sale ID
-            p.name AS product,               -- Product name
-            si.quantity AS qty,              -- Quantity
-            si.price * si.quantity AS total, -- Total per item line
-            s.created_at AS date             -- Sale date
-        FROM sales s
-        JOIN sales_items si ON s.id = si.sale_id
-        JOIN products p ON si.product_id = p.id
-        ORDER BY s.created_at DESC
-    ");
+$view = $_GET['view'] ?? 'all';
 
-    $sales = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($sales);
-} catch (PDOException $e) {
-    http_response_code(500);
-    echo json_encode(["error" => $e->getMessage()]);
+$sql = "
+  SELECT
+    s.id AS sale_id,
+    s.user_id,
+    s.total,
+    s.created_at,
+    si.quantity,
+    si.price,
+    p.name AS product_name
+  FROM sales s
+  JOIN sales_items si ON s.id = si.sale_id
+  JOIN products p ON si.product_id = p.id
+";
+
+$params = [];
+if ($view === 'today') {
+  $sql .= " WHERE DATE(s.created_at) = CURDATE()";
 }
+
+$sql .= " ORDER BY s.id DESC";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute($params);
+
+$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// group by sale
+$grouped = [];
+foreach ($rows as $row) {
+  $saleId = $row['sale_id'];
+  if (!isset($grouped[$saleId])) {
+    $grouped[$saleId] = [
+      'user_id' => $row['user_id'],
+      'total' => (float)$row['total'],
+      'created_at' => $row['created_at'],
+      'items' => []
+    ];
+  }
+  $grouped[$saleId]['items'][] = [
+    'product' => $row['product_name'],
+    'qty' => (int)$row['quantity']
+  ];
+}
+
+echo json_encode(array_values($grouped));
