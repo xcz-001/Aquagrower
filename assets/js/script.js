@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (res.ok) {
           if (result.user.role === 'admin') {
             window.location.href = 'homepage/admin.php';
-          } else if (result.user.role === 'cashier') {
+          } else if (result.user.role === 'user') {
             window.location.href = 'homepage/home.php';
           }
         } else {
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ✅ Signup form validate
+  // Signup form validate
   const signupForm = document.getElementById('signupForm');
   if (signupForm) {
     signupForm.addEventListener('submit', async function (e) {
@@ -49,8 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const formData = new FormData(this);
       const data = Object.fromEntries(formData.entries());
-      console.log('Trying to contact the server...');
-      console.log('Data sent to the server:', data);
+      // console.log('Trying to contact the server...');
+      // console.log('Data sent to the server:', data);
 
       try {
         const res = await fetch('http://localhost/AquaGrower/api/users/create.php', {
@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (res.status === 200) {
         alert('User created successfully');
+        window.location.href = "http://localhost/AquaGrower/index.html";
       } else if (res.status === 409) {
         alert(result.error || 'Username already exists');
       } else if (res.status === 400) {

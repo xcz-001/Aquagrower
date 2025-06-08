@@ -10,7 +10,7 @@
 
 <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
   <h4 class="mb-3 text-center text-success">Sign Up</h4>
-  <form id="signupForm">
+  <!-- <form id="signupForm">
     <input name="username" required type="text" class="form-control mb-2" placeholder="Username">
       <select name="role" class="form-select mb-2" required>
         <option value="">Select Role</option>
@@ -20,7 +20,19 @@
     <input minlength="8" name="password" id="signuppassword" required type="password" class="form-control mb-3" placeholder="Password">
     <input minlength="8" id="signuppassword2" required type="password" class="form-control mb-3" placeholder="Re-enter Password">
     <button type="submit" class="btn btn-success w-100">Sign Up</button>
-  </form>
+  </form> -->
+  <form id="signupForm">
+  <input name="name" required type="text" class="form-control mb-2" placeholder="Full Name">
+  <input name="email" required type="email" class="form-control mb-2" placeholder="Email">
+  <input name="phone" required type="tel" class="form-control mb-2" placeholder="Phone Number">
+  <input name="address" required type="text" class="form-control mb-2" placeholder="Address">
+  <input name="username" required type="text" class="form-control mb-2" placeholder="Username">
+  <input type="hidden" name="role" value="user">
+  <input minlength="8" name="password" id="signuppassword" required type="password" class="form-control mb-3" placeholder="Password">
+  <input minlength="8" id="signuppassword2" required type="password" class="form-control mb-3" placeholder="Re-enter Password">
+  <button type="submit" class="btn btn-success w-100">Sign Up</button>
+</form>
+
   <div class="mt-3 text-center">
     <small>Already have an account? <a href="index.html">Login</a></small>
   </div>

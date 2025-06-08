@@ -24,8 +24,8 @@ if ($stmt->fetch()) {
 $hash = password_hash($data['password'], PASSWORD_BCRYPT);
 
 try {
-    $stmt = $pdo->prepare("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
-    $stmt->execute([$data['username'], $hash, $data['role']]);
+    $stmt = $pdo->prepare("INSERT INTO users (username, password, role, name, email, phone, address) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$data['username'], $hash, $data['role'], $data['name'], $data['email'], $data['phone'], $data['address']]);
     http_response_code(200);
     echo json_encode(["success" => true]);
 } catch (PDOException $e) {
@@ -34,4 +34,3 @@ try {
 }
 // This code handles user creation, expecting a JSON payload with username, password, and role.
 // It hashes the password and inserts the new user into the database.
-?>
